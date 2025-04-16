@@ -11,7 +11,7 @@ Or follow the instructions below to build FFmpeg from source.
 ## Prerequisites
 
 Before starting, ensure you have the following installed on your Windows system:
-- MSYS2
+- MSYS2 (Mingw64 shell)
 - Node.js (required for the transcoding script)
 - Anime4K GLSL shaders ([available here](https://github.com/bloc97/Anime4K/tree/master))
 - A Vulkan-capable GPU (required for the Anime4K filter)
