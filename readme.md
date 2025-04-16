@@ -1,6 +1,12 @@
 # Building FFMPEG in MSYS2 on Windows
 
-This guide walks through the process of building FFMPEG from source using MSYS2 on Windows, including optional support for NVIDIA CUDA and Intel VPL, and integration with Jellyfin for enhanced video transcoding with Anime4K upscaling.
+## PreBuilt Libraries
+
+For convenience, you can skip the build process by using the prebuilt binaries:
+1. Copy the prebuilt `ffmpeg.exe` and all its DLLs from the release section
+2. Skip directly to the [Integrating with Jellyfin](#integrating-with-jellyfin) section
+
+Or follow the instructions below to build FFmpeg from source.
 
 ## Prerequisites
 
