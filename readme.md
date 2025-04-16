@@ -1,10 +1,14 @@
 # Building FFMPEG in MSYS2 on Windows
 
-This guide walks through the process of building FFMPEG from source using MSYS2 on Windows, including optional support for NVIDIA CUDA and Intel VPL.
+This guide walks through the process of building FFMPEG from source using MSYS2 on Windows, including optional support for NVIDIA CUDA and Intel VPL, and integration with Jellyfin for enhanced video transcoding with Anime4K upscaling.
 
 ## Prerequisites
 
-Before starting, ensure you have MSYS2 properly installed on your Windows system.
+Before starting, ensure you have the following installed on your Windows system:
+- MSYS2
+- Node.js (required for the transcoding script)
+- Anime4K GLSL shaders ([available here](https://github.com/bloc97/Anime4K/tree/master))
+- A Vulkan-capable GPU (required for the Anime4K filter)
 
 ## Basic Setup
 
@@ -156,6 +160,37 @@ cd jellyfin-ffmpeg  # Or your FFMPEG source directory
 make -j$(nproc)
 ```
 
+## Integrating with Jellyfin
+
+After successfully building FFmpeg, you'll need to integrate it with Jellyfin for enhanced video transcoding capabilities:
+
+### 1. Gathering Required DLLs
+
+While building FFmpeg statically is possible, it requires all packages to be built from source rather than using prebuilt versions. For convenience, prebuilt DLLs are included in the `prebuilt` folder of this repository.
+
+### 2. Replacing FFmpeg in Jellyfin
+
+1. Copy your built FFmpeg executable and necessary DLLs to the Jellyfin server directory.
+2. Create a `shaders` folder in the same directory as `ffmpeg.exe` and copy the Anime4K GLSL shaders there.
+
+### 3. Setting Up the Transcoding Script
+
+1. Copy the provided `.bat` script to the Jellyfin server folder. This script redirects FFmpeg commands through Node.js to modify the transcoding parameters and inject the Anime4K filter.
+2. Edit Jellyfin's encoding configuration file located at `AppData\Local\Jellyfin\config\encoding.xml` to point to the batch script:
+
+```xml
+<EncoderAppPath>C:\Program Files\Jellyfin\Server\ffmpeg.bat</EncoderAppPath>
+<EncoderAppPathDisplay>C:\Program Files\Jellyfin\Server\ffmpeg.bat</EncoderAppPathDisplay>
+```
+
+### 4. Understanding the Upscaling Implementation
+
+This setup employs a slightly unconventional approach:
+- By default, Jellyfin only transcodes when the requested quality is lower than the video bitrate.
+- The provided scripts bypass quality reduction and instead apply upscaling.
+- **Note:** This means you will lose the ability to lower quality for bandwidth-constrained situations.
+- A green dot indicator will appear in the top-left corner of the video when the upscaling is working correctly.
+
 ## Notes
 
 The following features were noted as removed but may be needed:
@@ -164,6 +199,14 @@ The following features were noted as removed but may be needed:
 - `--enable-amf`
 - `--enable-cuda-llvm` (did not work with `pacman -S mingw-w64-x86_64-llvm`)
 
+## Troubleshooting
+
+If you encounter any issues during the build process:
+- Ensure all dependencies are correctly installed
+- Verify paths are correctly set, especially for CUDA toolkit
+- Check that you're using compatible versions of libraries
+- Make sure your GPU supports Vulkan for the Anime4K filter
+- Verify that the Node.js script can find the shader files in the expected location
 
 ## License
 
