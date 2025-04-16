@@ -14,7 +14,8 @@ Before starting, ensure you have the following installed on your Windows system:
 - MSYS2 (Mingw64 shell)
 - Node.js (required for the transcoding script)
 - Anime4K GLSL shaders ([available here](https://github.com/bloc97/Anime4K/tree/master))
-- A Vulkan-capable GPU (required for the Anime4K filter)
+- FSR GLSL shader ([available here](https://gist.github.com/agyild/7e8951915b2bf24526a9343d951db214))
+- A Vulkan-capable GPU (required for the Anime4K filter or any other GLSL filter)
 
 ## Basic Setup
 
