@@ -77,7 +77,7 @@ mingw32-make install
 
 ## Optional: NVIDIA CUDA Support
 
-To enable NVIDIA CUDA support (for `--enable-cuda`, `--enable-cuvid`, `--enable-nvdec`, `--enable-nvenc`, etc.), follow these steps:
+To enable NVIDIA CUDA support (for `--enable-cuda`, `--enable-cuvid`, `--enable-nvdec`, `--enable-nvenc`), follow these steps:
 
 1. Download and install the NVIDIA CUDA toolkit from the [official website](https://developer.nvidia.com/cuda-downloads). This guide uses CUDA 11.8, compatible with TESLA P4.
 
@@ -104,6 +104,33 @@ cd nv-codec-headers
 git checkout n12.2.72.0  # Using version 12.2 for TESLA P4 compatibility
 make install PREFIX=/mingw64
 ```
+
+## Optional: AMF Support
+
+To enable AMF support (for `--enable-amf`), follow these steps:
+
+1. **Clone the AMF SDK**  
+   First, clone the AMF SDK repository:
+
+   ```bash
+   git clone --recurse-submodules https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git
+   ```
+
+2. **Move the AMF SDK files**  
+   Next, move the required files into the appropriate directories. Here's a quick way to do it:
+
+   ```bash
+   mv /AMF/amf/public/include/* /AMF/amf/
+   ```
+
+3. **Add the AMF include directory to the compiler flags**  
+   I was really fed up with the compiler not finding this, so I just added the full path to the command (you can remove it if not necessary for your setup):
+
+   ```bash
+   --extra-cflags="-I<J:/msys64/home/Admin/AMF>"
+   ```
+
+   Be sure to replace `<J:/msys64/home/Admin/AMF>` with the actual path where AMF is located on your system.
 
 ## Building FFMPEG
 
@@ -165,7 +192,7 @@ cd jellyfin-ffmpeg  # Or your FFMPEG source directory
   --enable-opencl \
   --enable-cuda-llvm \
   --pkg-config-flags="--static" \
-  --extra-cflags="-I/mingw64/cuda/include -I/mingw64/codec/include" \
+  --extra-cflags="-I/mingw64/cuda/include -I/mingw64/codec/include -IJ:/msys64/home/Admin/AMF" \
   --extra-ldflags="-L/mingw64/cuda/lib -L/mingw64/codec/lib" \
   --enable-nonfree
 
@@ -208,17 +235,3 @@ This setup employs a slightly unconventional approach:
 
 The following features were noted as removed but may be needed:
 - `--enable-libsvtav1`
-- `--enable-amf`
-
-## Troubleshooting
-
-If you encounter any issues during the build process:
-- Ensure all dependencies are correctly installed
-- Verify paths are correctly set, especially for CUDA toolkit
-- Check that you're using compatible versions of libraries
-- Make sure your GPU supports Vulkan for the Anime4K filter
-- Verify that the Node.js script can find the shader files in the expected location
-
-## License
-
-This build configuration enables non-free components (`--enable-nonfree`), which may affect the licensing of your resulting binary. Ensure you understand the implications for your use case.
