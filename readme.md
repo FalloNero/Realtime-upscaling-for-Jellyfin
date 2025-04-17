@@ -16,8 +16,9 @@ Or follow the instructions below to build FFmpeg from source.
 Before starting, ensure you have the following installed on your Windows system:
 - MSYS2 (Mingw64 shell)
 - Node.js (required for the transcoding script)
-- Anime4K GLSL shaders ([available here](https://github.com/bloc97/Anime4K/tree/master))
-- FSR GLSL shader ([available here](https://gist.github.com/agyild/7e8951915b2bf24526a9343d951db214))
+- Upscaling GLSL shader
+1. Anime4K GLSL shaders ([available here](https://github.com/bloc97/Anime4K/tree/master))
+2. FSR GLSL shader ([available here](https://gist.github.com/agyild/7e8951915b2bf24526a9343d951db214))
 - A Vulkan-capable GPU (required for the Anime4K filter or any other GLSL filter)
 
 ## Basic Setup
@@ -77,7 +78,7 @@ mingw32-make install
 
 ## Optional: NVIDIA CUDA Support
 
-To enable NVIDIA CUDA support (for `--enable-cuda`, `--enable-cuvid`, `--enable-nvdec`, `--enable-nvenc`), follow these steps:
+To enable NVIDIA CUDA support(for `--enable-cuda`, `--enable-cuvid`, `--enable-nvdec`, `--enable-nvenc`, `enable-cuda-llvm`), follow these steps:
 
 1. Download and install the NVIDIA CUDA toolkit from the [official website](https://developer.nvidia.com/cuda-downloads). This guide uses CUDA 11.8, compatible with TESLA P4.
 
