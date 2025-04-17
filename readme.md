@@ -4,8 +4,8 @@
 
 For convenience, you can skip the build process by using the prebuilt binaries:
 
-Copy the prebuilt ffmpeg.exe and all its DLLs from the ffmpeg_prebuilt folder or
-Skip directly to the Integrating with Jellyfin section
+1. Copy the prebuilt ffmpeg.exe and all its DLLs from the ffmpeg_prebuilt folder or
+2. Skip directly to the [Integrating with Jellyfin](#integrating-with-jellyfin) section
 
 Note: The precompiled FFmpeg provided has been built without the `--enable-nonfree` flag, so `libfdk_aac`, `cuda-nvcc`, and `cuda-llvm` are not present. If you need these features, you'll need to build FFmpeg from source following the instructions below, which shouldn't be difficult.
 
