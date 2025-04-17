@@ -3,8 +3,11 @@
 ## PreBuilt Libraries
 
 For convenience, you can skip the build process by using the prebuilt binaries:
-1. Copy the prebuilt `ffmpeg.exe` and all its DLLs from the release section
-2. Skip directly to the [Integrating with Jellyfin](#integrating-with-jellyfin) section
+
+Copy the prebuilt ffmpeg.exe and all its DLLs from the ffmpeg_prebuilt folder or
+Skip directly to the Integrating with Jellyfin section
+
+Note: The precompiled FFmpeg provided has been built without the `--enable-nonfree` flag, so `libfdk_aac`, `cuda-nvcc`, and `cuda-llvm` are not present. If you need these features, you'll need to build FFmpeg from source following the instructions below, which shouldn't be difficult.
 
 Or follow the instructions below to build FFmpeg from source.
 
@@ -37,6 +40,7 @@ pacman -S mingw-w64-x86_64-libvpx
 pacman -S mingw-w64-x86_64-libwebp
 pacman -S mingw-w64-x86_64-x264
 pacman -S mingw-w64-x86_64-opencl-headers
+pacman -S mingw-w64-x86_64-llvm
 pacman -S nasm yasm
 pacman -S diffutils
 pacman -S make
@@ -158,6 +162,8 @@ cd jellyfin-ffmpeg  # Or your FFMPEG source directory
   --disable-shared \
   --enable-ffnvcodec \
   --enable-libplacebo \
+  --enable-opencl \
+  --enable-cuda-llvm \
   --pkg-config-flags="--static" \
   --extra-cflags="-I/mingw64/cuda/include -I/mingw64/codec/include" \
   --extra-ldflags="-L/mingw64/cuda/lib -L/mingw64/codec/lib" \
@@ -202,9 +208,7 @@ This setup employs a slightly unconventional approach:
 
 The following features were noted as removed but may be needed:
 - `--enable-libsvtav1`
-- `--enable-opencl`
 - `--enable-amf`
-- `--enable-cuda-llvm` (did not work with `pacman -S mingw-w64-x86_64-llvm`)
 
 ## Troubleshooting
 
