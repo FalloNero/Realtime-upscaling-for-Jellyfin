@@ -138,10 +138,13 @@ To enable AMF support (for `--enable-amf`), follow these steps:
 
 To enable AV1 support (for `--enable-libsvtav1`), follow these steps:
 
-1. Fix a line in 
-	```svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, svt_enc, &svt_enc->enc_params);```
+1. Fix a line in `jellyfin-ffmpeg/libavcodec/libsvtav1.c`
+
+	```bash
+	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, svt_enc, &svt_enc->enc_params);```
 	to
-	```svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, &svt_enc->enc_params);```
+	```bash
+	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, &svt_enc->enc_params);```
 	
 ## Building FFMPEG
 
