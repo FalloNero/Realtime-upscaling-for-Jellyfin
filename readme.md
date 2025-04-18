@@ -133,6 +133,16 @@ To enable AMF support (for `--enable-amf`), follow these steps:
 
    Be sure to replace `<J:/msys64/home/Admin/AMF>` with the actual path where AMF is located on your system.
 
+
+## Optional: AV1 
+
+To enable AV1 support (for `--enable-libsvtav1`), follow these steps:
+
+1. Fix a line in 
+	```svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, svt_enc, &svt_enc->enc_params);```
+	to
+	```svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, &svt_enc->enc_params);```
+	
 ## Building FFMPEG
 
 Now we can build FFMPEG with our desired configuration:
@@ -192,6 +202,7 @@ cd jellyfin-ffmpeg  # Or your FFMPEG source directory
   --enable-libplacebo \
   --enable-opencl \
   --enable-cuda-llvm \
+  --enable-libsvtav1 \
   --pkg-config-flags="--static" \
   --extra-cflags="-I/mingw64/cuda/include -I/mingw64/codec/include -IJ:/msys64/home/Admin/AMF" \
   --extra-ldflags="-L/mingw64/cuda/lib -L/mingw64/codec/lib" \
@@ -231,8 +242,3 @@ This setup employs a slightly unconventional approach:
 - The provided scripts bypass quality reduction and instead apply upscaling.
 - **Note:** This means you will lose the ability to lower quality for bandwidth-constrained situations.
 - A green dot indicator will appear in the top-left corner of the video when the upscaling is working correctly.
-
-## Notes
-
-The following features were noted as removed but may be needed:
-- `--enable-libsvtav1`
