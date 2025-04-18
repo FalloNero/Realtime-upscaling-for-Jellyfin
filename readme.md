@@ -141,10 +141,12 @@ To enable AV1 support (for `--enable-libsvtav1`), follow these steps:
 1. Fix a line in `jellyfin-ffmpeg/libavcodec/libsvtav1.c`
 
 	```bash
-	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, svt_enc, &svt_enc->enc_params);```
+	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, svt_enc, &svt_enc->enc_params);
+	```
 	to
 	```bash
-	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, &svt_enc->enc_params);```
+	svt_ret = svt_av1_enc_init_handle(&svt_enc->svt_handle, &svt_enc->enc_params);
+	```
 	
 ## Building FFMPEG
 
